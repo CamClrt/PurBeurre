@@ -1,33 +1,30 @@
 from django.db import models
 
-# Create your models here.
+# from django.contrib.auth.models import User
 
 
 class Category(models.Model):
     category_name = models.CharField(max_length=50, unique=True)
-    # TODO: Si vous essayez d’enregistrer une instance d’un modèle
-    # avec une valeur d’un champ unique dupliquée, une exception
-    # django.db.IntegrityError sera levée par la méthode save() du modèle.
 
     def __str__(self):
         return f"{self.category_name}"
 
 
 class Product(models.Model):
-    product_name = models.CharField(max_length=150, blank=True)
-    code = models.PositiveBigIntegerField(default=0)
-    brand = models.CharField(max_length=100, blank=True)
-    photo_uri = models.TextField(blank=True)
-    product_uri = models.TextField(blank=True)
-    nutrition_grade = models.CharField(max_length=1)
-    energy_100g = models.PositiveSmallIntegerField(default=0)
-    fat = models.PositiveSmallIntegerField(default=0)
-    saturates = models.PositiveSmallIntegerField(default=0)
-    carbohydrate = models.PositiveSmallIntegerField(default=0)
-    sugars = models.PositiveSmallIntegerField(default=0)
-    protein = models.PositiveSmallIntegerField(default=0)
-    fiber = models.PositiveSmallIntegerField(default=0)
-    salt = models.PositiveSmallIntegerField(default=0)
+    product_name = models.CharField(max_length=150, null=True)
+    code = models.CharField(max_length=13, default=(13 * "0"))
+    brand = models.CharField(max_length=100, null=True)
+    photo_url = models.TextField(null=True)
+    product_url = models.TextField(null=True)
+    nutrition_grade = models.CharField(max_length=1, null=True)
+    energy_100g = models.IntegerField(default=0)
+    fat = models.IntegerField(default=0)
+    saturates = models.IntegerField(default=0)
+    carbohydrate = models.IntegerField(default=0)
+    sugars = models.IntegerField(default=0)
+    protein = models.IntegerField(default=0)
+    fiber = models.IntegerField(default=0)
+    salt = models.IntegerField(default=0)
     categories = models.ManyToManyField(Category, related_name="product")
 
     def __str__(self):
@@ -44,4 +41,5 @@ class Favoris(models.Model):
     product_substitute = models.ForeignKey(
         Product, on_delete=models.CASCADE, related_name="substitute"
     )
+    # user = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now_add=True)

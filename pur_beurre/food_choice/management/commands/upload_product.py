@@ -2,6 +2,7 @@ from django.core.management.base import BaseCommand
 from food_choice.models import Category, Product
 from food_choice.api import API
 from progress.bar import Bar
+from django.db import IntegrityError
 
 
 class Command(BaseCommand):
@@ -11,12 +12,6 @@ class Command(BaseCommand):
         api = API()
         api.categories
         imported_products = api.products
-
-        # A SUPPRIMER ENSUITE
-        categories = api.selected_categories
-        for category in categories:
-            print(category)
-        # A SUPPRIMER ENSUITE
 
         if imported_products is not None:
             self.stdout.write(self.style.SUCCESS("API import: success"))
@@ -29,53 +24,72 @@ class Command(BaseCommand):
         with Bar("Progression", max=len(imported_products)) as bar:
             for imported_product in imported_products:
 
-                imported_categories = []
+                # filter & insert products
+                name = imported_product.get("product_name_fr", "")[:150].strip()
+                brand = imported_product.get("brands", "")[:100].strip()
+                url = imported_product.get("url", "").strip()
+                image_url = imported_product.get("image_url", "").strip()
+                code = imported_product.get("code", "")[:13]
+                nutrition_grade = imported_product.get("nutrition_grades", "")[:1]
+
+                nutriments_list = [
+                    "energy_100g",
+                    "fat_100g",
+                    "saturated_100g",
+                    "carbohydrates_100g",
+                    "sugars_100g",
+                    "proteins_100g",
+                    "salt_100g",
+                    "fiber_100g",
+                ]
+
+                nutriments_dic = {}
+
+                for nutriment in nutriments_list:
+                    imported_value = imported_product.get("nutriments", 0).get(
+                        nutriment, 0
+                    )
+                    if isinstance(imported_value, int) is True:
+                        value = imported_value
+                    else:
+                        value = 0
+                    nutriments_dic[nutriment] = value
+
+                # insert product in DB
+                product_obj = Product(
+                    product_name=name,
+                    code=code,
+                    brand=brand,
+                    photo_url=image_url,
+                    product_url=url,
+                    nutrition_grade=nutrition_grade,
+                    energy_100g=nutriments_dic.get("energy_100g", 0),
+                    fat=nutriments_dic.get("fat_100g", 0),
+                    saturates=nutriments_dic.get("saturates_100g", 0),
+                    carbohydrate=nutriments_dic.get("carbohydrate_100g", 0),
+                    sugars=nutriments_dic.get("sugars_100g", 0),
+                    protein=nutriments_dic.get("protein_100g", 0),
+                    fiber=nutriments_dic.get("fiber_100g", 0),
+                    salt=nutriments_dic.get("salt_100g", 0),
+                )
+
+                product_obj.save()
+
                 # filter & insert categories
                 tmp_categories = imported_product.get("categories", "").split(",")
                 for tmp_category in tmp_categories:
-                    tmp_category = tmp_category[:50]
                     if tmp_category is not None:
-                        imported_categories.append(category)
+                        category_name = tmp_category[:50].strip()
+                        category_obj = Category(category_name=category_name)
+                        try:
+                            category_obj.save()
+                        except IntegrityError:
+                            category_obj = Category.objects.get(
+                                category_name=category_name
+                            )
 
-                # filter & insert products
-                name = imported_product.get("product_name_fr", "")[:150]
-                brand = imported_product.get("brands", "")[:100]
-                url = imported_product.get("url", "")
-                image_url = imported_product.get("image_url", "")
-                code = imported_product.get("code", (13 * "0"))
-                nutrition_grade = imported_product.get("nutrition_grades", "z")[:1]
-                energy_100g = imported_product.get("nutriments", "").get(
-                    "energy_100g", "999999"
-                )
-                # get nutriments details
-                fat = imported_product.get("nutriments", "").get("fat_100g", "999999")
-
-                saturates = imported_product.get("nutriments", "").get(
-                    "saturated-fat_100g", "999999"
-                )
-
-                carbohydrate = imported_product.get("nutriments", "").get(
-                    "carbohydrates_100g", "999999"
-                )
-
-                sugars = imported_product.get("nutriments", "").get(
-                    "sugars_100g", "999999"
-                )
-
-                protein = imported_product.get("nutriments", "").get(
-                    "proteins_100g", "999999"
-                )
-
-                salt = imported_product.get("nutriments", "").get("salt_100g", "999999")
-
-                fiber = imported_product.get("nutriments", "").get(
-                    "fiber_100g", "999999"
-                )
+                        # associate product & category
+                        product_obj.categories.add(category_obj)
+                        product_obj.save()
 
                 bar.next()
-
-        # A REVOIR
-        if imported_products is not None:
-            self.stdout.write(self.style.SUCCESS("DB import: success"))
-        else:
-            self.stdout.write(self.style.ERROR("DB import: error"))
