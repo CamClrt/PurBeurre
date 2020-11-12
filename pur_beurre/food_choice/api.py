@@ -20,16 +20,15 @@ class API:
         self.categories_key = "tags"
         self.categories_name_field = "name"
         self.categories_regex = "^[A-Z].+"
-        self.nb_cat_selected = 5
-        self.selected_categories = None
 
-    @property
-    def categories(self):
-        """Import and return a selection of categories"""
+    def get_categories(self, nb_cat_selected):
+        """Import and return a selection of x categories"""
         date = datetime.now()
         headers = {"date": date.__str__()[:19], "user-agent": "PurBeurre/0.0.1"}
 
         response = requests.get(self.categories_url, headers=headers, timeout=10)
+
+        category_list = None
 
         if response.status_code == 200:
             content = response.json()
@@ -50,10 +49,9 @@ class API:
             with open("log.txt", "a", encoding="utf-8") as file:
                 file.write(err)
 
-        self.selected_categories = category_list[: self.nb_cat_selected]
+        return category_list[:nb_cat_selected]
 
-    @property
-    def products(self):
+    def get_products(self, selected_categories):
         """Import and return a selection of products by category"""
         products = []
 
@@ -62,8 +60,8 @@ class API:
             "\n-----> Importation des données depuis"
             " l'API d'Open Food Facts <-----\n"
         )
-        with Bar("Progression", max=len(self.selected_categories)) as progress_bar:
-            for category in self.selected_categories:
+        with Bar("Progression", max=len(selected_categories)) as progress_bar:
+            for category in selected_categories:
 
                 payload = {
                     "action": "process",

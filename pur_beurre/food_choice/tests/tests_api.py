@@ -3,7 +3,6 @@
 from unittest.mock import patch
 from django.test import TestCase
 from food_choice.api import API
-import requests
 
 
 categories_res = {
@@ -46,16 +45,14 @@ class CategoryMockResponse:
     }
 
 
-class Test__categories(TestCase):
-
+class Test_categories(TestCase):
     """GIVEN a mocke version of requests.get() WHEN the HTTP response
     is set to successful THEN check the HTTP response."""
 
     @patch("requests.get", return_value=CategoryMockResponse())
-    def test__categories(self, mocked):
+    def test_get_categories(self, mocked):
         api = API()
-        api.categories
-        result = api.selected_categories
+        result = api.get_categories(nb_cat_selected=5)
         expected_result = [
             "Aliments et boissons à base de végétaux",
             "Aliments d'origine végétale",
@@ -112,9 +109,9 @@ class Test_products(TestCase):
     is set to successful THEN check the HTTP response."""
 
     @patch("requests.get", return_value=ProductMockResponse())
-    def test_products(self, mocked):
+    def test_get_products(self, mocked):
         api = API()
-        api.selected_categories = [
+        selected_categories = [
             "Aliments et boissons à base de végétaux",
             "Aliments d'origine végétale",
             "Snacks",
@@ -128,5 +125,5 @@ class Test_products(TestCase):
             products_res.get("products")[0],  # request & cat n°4
             products_res.get("products")[0],  # request & cat n°5
         ]
-        result = api.products
+        result = api.get_products(selected_categories)
         self.assertEqual(result, expected_result)
