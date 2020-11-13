@@ -13,9 +13,14 @@
 
             </div>
             <div class="col-lg-8 align-self-baseline">
-                <input type="text" name="search" id="search" class="rounded" placeholder=" Votre aliment" size="50"
-                    maxlength="20" />
-                <a id="center-home-btn" class="btn btn-primary js-scroll-trigger" href="#">chercher</a>
+                <form method="POST" action="results/">
+                    <!-- TODO: à revoir avec Aurélien : <form method="POST" action="{% url 'food_choice:results' %}"></form> -->
+                    {% csrf_token %}
+                    <input type="text" name="home_search" id="home_search" class="rounded" placeholder=" Votre aliment"
+                        size="50" maxlength="50" autofocus />
+                    <input id="center-home-btn" class="btn btn-primary js-scroll-trigger" type="submit"
+                        value="Chercher" />
+                </form>
             </div>
         </div>
     </div>

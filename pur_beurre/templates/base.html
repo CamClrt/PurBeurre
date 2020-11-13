@@ -39,9 +39,10 @@
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto my-2 my-lg-0">
                     <li class="nav-item"></li>
-                    <form method="post" action="">
+                    <form method="POST" action="results/">
+                        {% csrf_token %}
                         <input type="text" name="nav_search" id="nav_search" class="rounded"
-                            placeholder=" Votre aliment" size="20" maxlength="20" />
+                            placeholder=" Votre aliment" size="25" maxlength="50" />
                     </form>
                     {% if user.is_authenticated %}
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{% url 'profile' %}"><img
@@ -92,6 +93,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
     <!-- Core theme JS-->
     <script src="{% static 'dist/js/scripts.js' %}"></script>
+    <script type="module" src="{% static 'scripts.js' %}"></script>
 </body>
 
 </html>
