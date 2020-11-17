@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 # from django.contrib.auth.models import User
 
@@ -41,5 +42,5 @@ class Favoris(models.Model):
     product_substitute = models.ForeignKey(
         Product, on_delete=models.CASCADE, related_name="substitute"
     )
-    # user = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
-    date = models.DateTimeField(auto_now_add=True)
+    date = models.DateTimeField(default=timezone.now)
+    # owner = models.ForeignKey(User, on_delete=models.CASCADE)

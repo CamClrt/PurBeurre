@@ -39,16 +39,15 @@
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto my-2 my-lg-0">
                     <li class="nav-item"></li>
-                    <form method="POST" action="results/">
+                    <form method="POST" action="{% url 'food_choice:products' %}">
                         {% csrf_token %}
-                        <input type="text" name="nav_search" id="nav_search" class="rounded"
-                            placeholder=" Votre aliment" size="25" maxlength="50" />
+                        {{ nav_form }}
                     </form>
                     {% if user.is_authenticated %}
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{% url 'profile' %}"><img
                                 src="{% static '/src/assets/img/account_online.png' %}" title="Profile"
                                 alt="Profile"></a>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#"><img
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="favorites/"><img
                                 src="{% static '/src/assets/img/logo_carrot.png' %}" title="Favoris" alt="Favoris"></a>
                     </li>
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{% url 'logout' %}"><img
