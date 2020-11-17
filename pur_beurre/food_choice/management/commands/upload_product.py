@@ -10,7 +10,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
         api = API()
-        imported_categories = api.get_categories(5)
+        imported_categories = api.get_categories(15)
         imported_products = api.get_products(imported_categories)
 
         if imported_products is not None:
@@ -57,12 +57,12 @@ class Command(BaseCommand):
 
                 # insert product in DB
                 product_obj = Product(
-                    product_name=name,
+                    product_name=name.lower(),
                     code=code,
                     brand=brand,
                     photo_url=image_url,
                     product_url=url,
-                    nutrition_grade=nutrition_grade,
+                    nutrition_grade=nutrition_grade.upper(),
                     energy_100g=nutriments_dic.get("energy_100g", 0),
                     fat=nutriments_dic.get("fat_100g", 0),
                     saturates=nutriments_dic.get("saturates_100g", 0),

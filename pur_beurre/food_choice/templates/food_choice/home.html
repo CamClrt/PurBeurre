@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
+{% load static %}
 
 <!-- Masthead-->
 <header class="masthead">
@@ -35,7 +36,7 @@
         <div class="row">
             <div class="col-lg-6 col-md-12 text-center">
                 <div class="mt-5">
-                    <img src="static/src/assets/img/colette.png" alt="Colette"
+                    <img src="{% static 'src/assets/img/colette.png' %}" alt="Colette"
                         class="border border-white max-width: 100% height: auto" />
                     <!-- <i class="fas fa-4x fa-gem text-primary mb-4"></i> -->
                     <h3 class="h4 mb-2">Colette</h3>
@@ -43,7 +44,7 @@
             </div>
             <div class="col-lg-6 col-md-12 text-center">
                 <div class="mt-5">
-                    <img src="static/src/assets/img/remy.png" alt="Colette"
+                    <img src="{% static 'src/assets/img/remy.png' %}" alt="Remy"
                         class="border border-white max-width: 100% height: auto" />
                     <!-- <i class="fas fa-4x fa-laptop-code text-primary mb-4"></i> -->
                     <h3 class="h4 mb-2">Rémy</h3>

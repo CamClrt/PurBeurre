@@ -30,7 +30,7 @@ class Product(models.Model):
 
     def __str__(self):
         return (
-            f"{self.product_name}, {self.brand}, {self.code}, "
+            f"{self.product_name}, {self.code}, "
             f"{self.nutrition_grade}, {self.energy_100g}"
         )
 
@@ -44,3 +44,6 @@ class Favoris(models.Model):
     )
     date = models.DateTimeField(default=timezone.now)
     # owner = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        pass

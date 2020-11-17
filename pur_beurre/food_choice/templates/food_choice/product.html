@@ -1,6 +1,47 @@
 {% extends 'base.html' %}
 {% block content %}
-<html>
-    <p>details of a product</p>
-</html>
+{% load static %}
+
+<!-- Masthead-->
+<header class="masthead">
+    <div class="container h-100">
+        <div class="row h-100 align-items-center justify-content-center text-center">
+            <div class="col-lg-10 align-self-end">
+                <h1 class="text-white">{{ product.product_name }}</h1>
+                <hr class="divider my-4" />
+            </div>
+            <div class="col-lg-8 align-self-baseline">
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="nutriscore">
+    {% if product.nutrition_grade == "A" %}
+    <img src="{% static 'src/assets/img/nutriscore-a.png' %}" alt="Nutriscore A">
+    {% elif product.nutrition_grade == "B" %}
+    <img src="{% static 'src/assets/img/nutriscore-b.png' %}" alt="Nutriscore B">
+    {% elif product.nutrition_grade == "C" %}
+    <img src="{% static 'src/assets/img/nutriscore-c.png' %}" alt="Nutriscore C">
+    {% elif product.nutrition_grade == "D" %}
+    <img src="{% static 'src/assets/img/nutriscore-d.png' %}" alt="Nutriscore D">
+    {% elif product.nutrition_grade == "E" %}
+    <img src="{% static 'src/assets/img/nutriscore-e.png' %}" alt="Nutriscore E">
+    {% endif %}
+</div>
+
+<ul>
+    <p>Repères nutritionnels</p>
+    <li>{{ product.energy_100g }} kcal</li>
+    <li>{{ product.fat }} g</li>
+    <li>{{ product.saturates }} g</li>
+    <li>{{ product.carbohydrate }} g</li>
+    <li>{{ product.sugars }} g</li>
+    <li>{{ product.protein }} g</li>
+    <li>{{ product.fiber }} g</li>
+    <li>{{ product.salt }} g</li>
+
+    <a href="{{ product.product_url }}" target="_blank">Voir la fiche d'OpenFoodFacts</a>
+</ul>
+
 {% endblock content %}
