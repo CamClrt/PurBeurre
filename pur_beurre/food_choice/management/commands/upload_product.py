@@ -57,7 +57,7 @@ class Command(BaseCommand):
 
                 # insert product in DB
                 product_obj = Product(
-                    product_name=name.lower(),
+                    name=name.lower(),
                     code=code,
                     brand=brand,
                     photo_url=image_url,

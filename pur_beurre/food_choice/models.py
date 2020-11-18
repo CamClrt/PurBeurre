@@ -12,7 +12,7 @@ class Category(models.Model):
 
 
 class Product(models.Model):
-    product_name = models.CharField(max_length=150, null=True)
+    name = models.CharField(max_length=150, null=True)
     code = models.CharField(max_length=13, default=(13 * "0"))
     brand = models.CharField(max_length=100, null=True)
     photo_url = models.TextField(null=True)
@@ -30,8 +30,7 @@ class Product(models.Model):
 
     def __str__(self):
         return (
-            f"{self.product_name}, {self.code}, "
-            f"{self.nutrition_grade}, {self.energy_100g}"
+            f"{self.name}, {self.code}, " f"{self.nutrition_grade}, {self.energy_100g}"
         )
 
 
