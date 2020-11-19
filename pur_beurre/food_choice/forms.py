@@ -1,3 +1,5 @@
+"""Create the forms of the application."""
+
 from django import forms
 
 

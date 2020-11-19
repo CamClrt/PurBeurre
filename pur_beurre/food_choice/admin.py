@@ -1,3 +1,5 @@
+"""Customize the administration part of the application."""
+
 from django.contrib import admin
 from .models import Product, Category, Favoris
 

@@ -1,3 +1,5 @@
+"""Launche the filling of the database on the command line."""
+
 from django.core.management.base import BaseCommand
 from food_choice.models import Category, Product
 from food_choice.api import API
@@ -80,13 +82,11 @@ class Command(BaseCommand):
                 for tmp_category in tmp_categories:
                     if tmp_category is not None:
                         category_name = tmp_category[:50].strip()
-                        category_obj = Category(category_name=category_name)
+                        category_obj = Category(name=category_name)
                         try:
                             category_obj.save()
                         except IntegrityError:
-                            category_obj = Category.objects.get(
-                                category_name=category_name
-                            )
+                            category_obj = Category.objects.get(name=category_name)
 
                         # associate product & category
                         product_obj.categories.add(category_obj)

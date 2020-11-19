@@ -1,6 +1,4 @@
-"""
-    This module manage all operations with the OpenFoodFacts API
-"""
+"""Manage all operations with the OpenFoodFacts API"""
 
 import re
 from progress.bar import Bar

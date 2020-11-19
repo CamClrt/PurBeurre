@@ -1,3 +1,5 @@
+"""Views used by the application."""
+
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from .forms import UserRegisterForm
@@ -5,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 
 
 def register(request):
+    """Display a register page and allow users to register"""
     if request.method == "POST":
         form = UserRegisterForm(request.POST)
         if form.is_valid():
@@ -22,4 +25,5 @@ def register(request):
 
 @login_required
 def profile(request):
+    """Display a profil page when user is logged in"""
     return render(request, "users/profile.html")

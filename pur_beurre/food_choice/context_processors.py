@@ -1,3 +1,5 @@
+"""Init context processors."""
+
 from food_choice.forms import NavResearchForm
 
 

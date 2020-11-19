@@ -1,4 +1,4 @@
-"""This module test the google the OpenFoodFacts API class."""
+"""Test the google the OpenFoodFacts API class."""
 
 from unittest.mock import patch
 from django.test import TestCase

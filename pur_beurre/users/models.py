@@ -1,10 +1,13 @@
+"""Models used by the application."""
+
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 
 
 class UserManager(BaseUserManager):
     def create_user(self, email, username, password=None):
-        """Creates and saves a User with his email, username and password"""
+        """Creates and saves a user with his email, username and password"""
+
         if not email:
             raise ValueError("Users must have an email address")
 
@@ -19,6 +22,7 @@ class UserManager(BaseUserManager):
 
     def create_superuser(self, email, username, password=None):
         """Creates and saves a superuser his email, username and password"""
+
         user = self.create_user(
             email,
             username,

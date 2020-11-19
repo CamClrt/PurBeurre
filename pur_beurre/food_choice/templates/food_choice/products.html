@@ -23,7 +23,7 @@
     {% for product in products %}
     <li>{{ product.id }} - {{ product.product_name }} - {{ product.nutrition_grade }}</li>
     <a href="{% url 'food_choice:product' product.id %}"><img src="{{ product.photo_url }}"
-            alt="{{ product.product_name }}" title="fiche produit"></a>
+            alt="{{ product.product_name }}" title="photo produit"></a>
     <a href="{% url 'food_choice:substitutes' product.id %}">Substituer</a>
     {% endfor %}
 </ul>
