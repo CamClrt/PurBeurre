@@ -21,6 +21,17 @@ def home(request):
     )
 
 
+def product(request, product_id):
+    """Display a list of products according to the user research"""
+    product = Product.objects.get(pk=product_id)
+
+    context = {
+        "product": product,
+    }
+
+    return render(request, "food_choice/product.html", context)
+
+
 def products(request):
     """Display a list of products according to the user research"""
     if request.method == "POST":
@@ -31,24 +42,13 @@ def products(request):
         )
 
         context = {
-            "user_research": user_research,
+            "title": user_research,
+            "sentence": "Vous recherchez peut-être...",
+            "research": "products",
             "products": products,
         }
 
-        return render(request, "food_choice/products.html", context)
-
-
-def product(request, product_id):
-    """Display a list of products according to the user research"""
-    product = Product.objects.get(pk=product_id)
-    categories = Category.objects.filter(product__name=product.name).distinct()
-
-    context = {
-        "product": product,
-        "categories": categories,
-    }
-
-    return render(request, "food_choice/product.html", context)
+        return render(request, "food_choice/research_results.html", context)
 
 
 def substitutes(request, product_id):
@@ -61,10 +61,9 @@ def substitutes(request, product_id):
 
     # find similare products wich share at least 4 categories,
     # with the same or a better nutrition grade
-    # and order by this grade
+    # and order by grade
     substitutes = (
         Product.objects.filter(categories__in=categories)
-        .distinct()
         .annotate(nb_cat=Count("categories"))
         .filter(nb_cat__gte=4)
         .filter(nutrition_grade__lt=product.nutrition_grade)
@@ -73,19 +72,25 @@ def substitutes(request, product_id):
     )
 
     context = {
-        "product": product,
-        "substitutes": substitutes,
+        "title": product.name,
+        "sentence": "Vous pouvez substituer votre recherche par...",
+        "research": "substitutes",
+        "products": substitutes,
     }
 
-    return render(request, "food_choice/substitutes.html", context)
+    return render(request, "food_choice/research_results.html", context)
 
 
 @login_required
 def favorites(request):
     """display the user's favorite products, if he's logged in"""
 
+    # TODO: complete this view
+
     context = {
-        "favorites": "",
+        "title": "Mes favoris",
+        "research": "favorites",
+        "products": products,
     }
 
-    return render(request, "food_choice/favorites.html", context)
+    return render(request, "food_choice/research_results.html", context)
