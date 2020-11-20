@@ -3,8 +3,6 @@
 from django.db import models
 from django.utils import timezone
 
-# from django.contrib.auth.models import User
-
 
 class Category(models.Model):
     """Represente the categories of a product"""
@@ -42,13 +40,12 @@ class Favoris(models.Model):
     """Represente the user's favorites products"""
 
     product = models.ForeignKey(
-        Product, on_delete=models.CASCADE, related_name="product"
+        Product, on_delete=models.CASCADE, related_name="favorite_product"
     )
-    product_substitute = models.ForeignKey(
-        Product, on_delete=models.CASCADE, related_name="substitute"
+    substitute = models.ForeignKey(
+        Product, on_delete=models.CASCADE, related_name="favorite_substitute"
     )
     date = models.DateTimeField(default=timezone.now)
-    # owner = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
-        pass
+        return f"{self.date}: {self.substitute} substitute {self.product}"

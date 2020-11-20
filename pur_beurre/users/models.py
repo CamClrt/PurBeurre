@@ -2,6 +2,7 @@
 
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
+from food_choice.models import Favoris
 
 
 class UserManager(BaseUserManager):
@@ -44,6 +45,7 @@ class User(AbstractBaseUser):
         default="utilisateur",
     )
     is_admin = models.BooleanField(default=False)
+    favorites = models.ManyToManyField(Favoris, related_name="favoris")
 
     objects = UserManager()
 
