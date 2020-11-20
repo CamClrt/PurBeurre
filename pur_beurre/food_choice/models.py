@@ -19,7 +19,7 @@ class Product(models.Model):
     """Represente a product"""
 
     name = models.CharField(max_length=150, null=True)
-    code = models.CharField(max_length=13, default=(13 * "0"))
+    code = models.CharField(max_length=13, unique=True)
     brand = models.CharField(max_length=100, null=True)
     photo_url = models.TextField(null=True)
     product_url = models.TextField(null=True)

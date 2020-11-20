@@ -23,6 +23,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("register/", user_views.register, name="register"),
     path("profile/", user_views.profile, name="profile"),
+    path("profile/favorites/", user_views.profile, name="profile_favoris"),
     path(
         "login/",
         auth_views.LoginView.as_view(template_name="users/login.html"),

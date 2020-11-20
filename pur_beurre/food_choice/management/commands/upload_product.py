@@ -31,7 +31,7 @@ class Command(BaseCommand):
                 brand = imported_product.get("brands", "")[:100].strip()
                 url = imported_product.get("url", "").strip()
                 image_url = imported_product.get("image_url", "").strip()
-                code = imported_product.get("code", "")[:13]
+                code = imported_product.get("code", "")[:13].strip()
                 nutrition_grade = imported_product.get("nutrition_grades", "")[:1]
 
                 nutriments_list = [
@@ -75,21 +75,25 @@ class Command(BaseCommand):
                     salt=nutriments_dic.get("salt_100g", 0),
                 )
 
-                product_obj.save()
+                try:
+                    product_obj.save()
 
-                # filter & insert categories
-                tmp_categories = imported_product.get("categories", "").split(",")
-                for tmp_category in tmp_categories:
-                    if tmp_category is not None:
-                        category_name = tmp_category[:50].strip()
-                        category_obj = Category(name=category_name)
-                        try:
-                            category_obj.save()
-                        except IntegrityError:
-                            category_obj = Category.objects.get(name=category_name)
+                    # filter & insert categories
+                    tmp_categories = imported_product.get("categories", "").split(",")
+                    for tmp_category in tmp_categories:
+                        if tmp_category is not None:
+                            category_name = tmp_category[:50].strip()
+                            category_obj = Category(name=category_name)
+                            try:
+                                category_obj.save()
+                            except IntegrityError:
+                                category_obj = Category.objects.get(name=category_name)
 
-                        # associate product & category
-                        product_obj.categories.add(category_obj)
-                        product_obj.save()
+                            # associate product & category
+                            product_obj.categories.add(category_obj)
+                            product_obj.save()
+
+                except IntegrityError:
+                    print(f" - Product: {name} with {code} code already exists")
 
                 bar.next()
