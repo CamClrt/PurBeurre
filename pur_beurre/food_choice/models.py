@@ -2,6 +2,7 @@
 
 from django.db import models
 from django.utils import timezone
+from users.models import User
 
 
 class Category(models.Model):
@@ -45,7 +46,18 @@ class Favoris(models.Model):
     substitute = models.ForeignKey(
         Product, on_delete=models.CASCADE, related_name="favorite_substitute"
     )
+    owner = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="favorite_owner"
+    )
     date = models.DateTimeField(default=timezone.now)
 
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["product", "substitute", "owner"],
+                name="unique_user_favoris",
+            )
+        ]
+
     def __str__(self):
-        return f"{self.date}: {self.substitute} substitute {self.product}"
+        return f"{self.user} {self.date}: {self.substitute} substitute {self.product}"

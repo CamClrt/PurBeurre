@@ -94,6 +94,6 @@ class Command(BaseCommand):
                             product_obj.save()
 
                 except IntegrityError:
-                    print(f" - Product: {name} with {code} code already exists")
+                    pass
 
                 bar.next()

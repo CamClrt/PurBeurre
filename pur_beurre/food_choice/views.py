@@ -1,10 +1,13 @@
 """Views used by the application."""
 
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .forms import HomeResearchForm
-from .models import Product, Category
+from .models import Product, Category, Favoris
+from users.models import User
 from django.db.models import Count
 from django.contrib.auth.decorators import login_required
+from django.db import IntegrityError
+from django.contrib import messages
 
 
 def home(request):
@@ -18,6 +21,15 @@ def home(request):
         request,
         "food_choice/home.html",
         context,
+    )
+
+
+def legal_notices(request):
+    """Display the legal notices page of the application"""
+
+    return render(
+        request,
+        "food_choice/legal_notices.html",
     )
 
 
@@ -71,26 +83,60 @@ def substitutes(request, product_id):
         .order_by("nutrition_grade")
     )
 
+    favoris = []
+    current_user = request.user
+    if current_user != "AnonymousUser":
+        favoris_obj = Favoris.objects.filter(owner_id=current_user.id)
+        for one_favoris in favoris_obj:
+            favoris.append(one_favoris.substitute.id)
+
     context = {
         "title": product.name,
+        "searched_product": product_id,
         "sentence": "Vous pouvez substituer votre recherche par...",
         "research": "substitutes",
         "products": substitutes,
+        "favoris": favoris,
     }
 
     return render(request, "food_choice/research_results.html", context)
 
 
 @login_required
+def save_as_favoris(request, product_id, substitute_id):
+    """save as the user's favorite product, if he's logged in"""
+    current_user = request.user
+    # insert product, substitute and user
+    product = Product.objects.get(pk=product_id)
+    substitute = Product.objects.get(pk=substitute_id)
+    user = User.objects.get(pk=current_user.id)
+    favoris = Favoris(product=product, substitute=substitute, owner=user)
+
+    try:
+        favoris.save()
+        return redirect("food_choice:favorites")
+    except IntegrityError:
+        messages.error(
+            request,
+            f"Erreur: {substitute.name} n'a pas pu être enregistré",
+        )
+        return redirect("food_choice:home")
+
+
+@login_required
 def favorites(request):
     """display the user's favorite products, if he's logged in"""
+    current_user = request.user
+    favoris_obj = Favoris.objects.filter(owner_id=current_user.id)
 
-    # TODO: complete this view
+    favoris = []
+    for one_favoris in favoris_obj:
+        favoris.append(one_favoris.substitute)
 
     context = {
-        "title": "Mes favoris",
+        "title": "Mes produits favoris",
         "research": "favorites",
-        "products": products,
+        "products": favoris,
     }
 
     return render(request, "food_choice/research_results.html", context)
