@@ -25,6 +25,14 @@
     </div>
 </header>
 
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-{{ message.tags }}">
+    {{ message }}
+</div>
+{% endfor %}
+{% endif %}
+
 <!-- Services-->
 <section class="page-section" id="services">
     <div class="container">

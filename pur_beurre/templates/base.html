@@ -47,7 +47,8 @@
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{% url 'profile' %}"><img
                                 src="{% static '/src/assets/img/account_online.png' %}" title="Profile"
                                 alt="Profile"></a>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="favorites/"><img
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger"
+                            href="{% url 'food_choice:favorites' %}"><img
                                 src="{% static '/src/assets/img/logo_carrot.png' %}" title="Favoris" alt="Favoris"></a>
                     </li>
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{% url 'logout' %}"><img
@@ -75,7 +76,8 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-6">
-                    <div class="small text-center text-muted"><a href="#">Mentions légales</a></div>
+                    <div class="small text-center text-muted"><a href="{% url 'food_choice:legal_notices' %}">Mentions
+                            légales</a></div>
                 </div>
                 <div class="col-lg-6">
                     <div class="small text-center text-muted"><a href="mailto:contact@purbeurre.com">Contact</a></div>

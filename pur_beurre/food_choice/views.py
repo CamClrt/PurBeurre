@@ -92,6 +92,7 @@ def substitutes(request, product_id):
 
     context = {
         "title": product.name,
+        "product_url": product.photo_url,
         "searched_product": product_id,
         "sentence": "Vous pouvez substituer votre recherche par...",
         "research": "substitutes",
