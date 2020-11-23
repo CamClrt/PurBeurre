@@ -40,7 +40,7 @@
                         {% elif product.nutrition_grade == "D" %}
                         <span class="nutriscore-D">D</span>
                         {% elif product.nutrition_grade == "E" %}
-                        <span class="nutriscore-B">E</span>
+                        <span class="nutriscore-E">E</span>
                         {% endif %}
 
                         <div class="card-body text-center">
@@ -58,9 +58,14 @@
                             {% endif %}
 
                             {% if user.is_authenticated and research == "substitutes"%}
-                            <a class="btn btn-primary js-scroll-trigger" href="#">
-                                <img src="{% static 'src/assets/img/save.png' %}" alt="Enregistrer">
+                            {% if product.id not in favoris %}
+                            <a class="btn btn-primary js-scroll-trigger"
+                                href="{% url 'food_choice:save_as_favoris' searched_product product.id %}">
+                                <img src="{% static 'src/assets/img/save.png' %}" alt="Sauvegarder">
                                 Sauvegarder</a>
+                            {% else %}
+                            <img src="{% static 'src/assets/img/check.png' %}" alt="Favoris">
+                            {% endif %}
                             {% endif %}
                         </div>
                     </div>
