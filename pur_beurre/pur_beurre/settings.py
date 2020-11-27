@@ -14,9 +14,6 @@ from pathlib import Path
 import os
 import django_heroku
 
-# Activate Django-Heroku.
-django_heroku.settings(locals())  # deployement
-
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -61,7 +58,10 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",  # deployment
 ]
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'  # deployment
 
 ROOT_URLCONF = "pur_beurre.urls"
 
@@ -137,6 +137,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")  # deployment
 
 STATIC_URL = "/static/"
 
@@ -149,3 +150,6 @@ LOGIN_REDIRECT_URL = "/"
 LOGIN_URL = "login"
 
 AUTH_USER_MODEL = "users.User"
+
+# Activate Django-Heroku.
+django_heroku.settings(locals())  # deployment
