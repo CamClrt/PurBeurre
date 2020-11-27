@@ -1,1 +1,1 @@
-web: gunicorn purBeurre.wsgi --chdir purBeurre
+web: gunicorn pur_beurre.wsgi --chdir pur_beurre
