@@ -94,7 +94,7 @@ class Command(BaseCommand):
                             product_obj.save()
 
                 except IntegrityError:
-                    pass
+                    continue
 
                 bar.next()
-                return
+        return
