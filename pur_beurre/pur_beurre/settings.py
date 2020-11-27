@@ -26,13 +26,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False  # deployement: Flase - production: True
+DEBUG = False if os.environ.get("ENV", "development") == "production" else True
 
 ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
-    "testserver",
-    "purbeurre-camclrt.herokuapp.com",
+    # "testserver",
+    ".herokuapps.com",
 ]
 
 
@@ -58,10 +58,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",  # deployment
 ]
-
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'  # deployment
 
 ROOT_URLCONF = "pur_beurre.urls"
 
@@ -152,4 +149,4 @@ LOGIN_URL = "login"
 AUTH_USER_MODEL = "users.User"
 
 # Activate Django-Heroku.
-django_heroku.settings(locals())  # deployment
+django_heroku.settings(locals())
