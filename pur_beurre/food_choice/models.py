@@ -60,4 +60,4 @@ class Favoris(models.Model):
         ]
 
     def __str__(self):
-        return f"{self.user} {self.date}: {self.substitute} substitute {self.product}"
+        return f"{self.owner}: {self.substitute} substitute {self.product}"
