@@ -15,7 +15,7 @@ import os
 import django_heroku
 
 # Activate Django-Heroku.
-django_heroku.settings(locals())
+django_heroku.settings(locals())  # deployement
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -29,7 +29,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False  # deployement: Flase - production: True
 
 ALLOWED_HOSTS = [
     "localhost",
@@ -96,6 +96,7 @@ DATABASES = {
         "PASSWORD": os.environ.get("PASSWORD"),
         "HOST": os.environ.get("HOST"),
         "PORT": os.environ.get("PORT"),
+        "CONN_MAX_AGE": 50,  # deployement
     }
 }
 
