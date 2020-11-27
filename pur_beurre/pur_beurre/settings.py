@@ -31,8 +31,8 @@ DEBUG = False if os.environ.get("ENV", "development") == "production" else True
 ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
-    # "testserver",
-    ".herokuapps.com",
+    "testserver",
+    "purbeurre-camclrt.herokuapp.com",
 ]
 
 
