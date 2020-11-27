@@ -44,8 +44,6 @@ class API:
         else:
             err = f"The error : '{response.status_code}' occurred"
             print(err)
-            with open("log.txt", "a", encoding="utf-8") as file:
-                file.write(err)
 
         return category_list[:nb_cat_selected]
 
@@ -86,8 +84,6 @@ class API:
                 else:
                     err = f"L'erreur : '{response.status_code}' est survenue"
                     print(err)
-                    with open("log.txt", "a", encoding="utf-8") as file:
-                        file.write(err)
 
                 progress_bar.next()
 
