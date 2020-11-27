@@ -56,11 +56,10 @@ def products(request):
         context = {
             "title": user_research,
             "sentence": "Vous recherchez peut-être...",
-            "research": "products",
             "products": products,
         }
 
-        return render(request, "food_choice/research_results.html", context)
+        return render(request, "food_choice/products.html", context)
 
 
 def substitutes(request, product_id):
@@ -95,22 +94,20 @@ def substitutes(request, product_id):
         "product_url": product.photo_url,
         "searched_product": product_id,
         "sentence": "Vous pouvez substituer votre recherche par...",
-        "research": "substitutes",
-        "products": substitutes,
+        "substitutes": substitutes,
         "favoris": favoris,
     }
 
-    return render(request, "food_choice/research_results.html", context)
+    return render(request, "food_choice/substitutes.html", context)
 
 
 @login_required
 def save_as_favoris(request, product_id, substitute_id):
     """save as the user's favorite product, if he's logged in"""
-    current_user = request.user
-    # insert product, substitute and user
     product = Product.objects.get(pk=product_id)
     substitute = Product.objects.get(pk=substitute_id)
-    user = User.objects.get(pk=current_user.id)
+    user = User.objects.get(pk=request.user.id)
+    # insert product, substitute and user
     favoris = Favoris(product=product, substitute=substitute, owner=user)
 
     try:
@@ -127,17 +124,12 @@ def save_as_favoris(request, product_id, substitute_id):
 @login_required
 def favorites(request):
     """display the user's favorite products, if he's logged in"""
-    current_user = request.user
-    favoris_obj = Favoris.objects.filter(owner_id=current_user.id)
-
-    favoris = []
-    for one_favoris in favoris_obj:
-        favoris.append(one_favoris.substitute)
+    favorites = Favoris.objects.filter(owner_id=request.user.id)
 
     context = {
         "title": "Mes produits favoris",
         "research": "favorites",
-        "products": favoris,
+        "favorites": favorites,
     }
 
-    return render(request, "food_choice/research_results.html", context)
+    return render(request, "food_choice/favorites.html", context)
