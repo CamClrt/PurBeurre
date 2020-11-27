@@ -12,8 +12,9 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 import os
-import django_heroku
 import dj_database_url
+
+#
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -32,7 +33,7 @@ DEBUG = False if os.environ.get("ENV", "development") == "production" else True
 ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
-    "testserver",
+    # "testserver",
     "purbeurre-camclrt.herokuapp.com",
 ]
 
@@ -59,6 +60,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
 
 ROOT_URLCONF = "pur_beurre.urls"
@@ -89,6 +91,7 @@ WSGI_APPLICATION = "pur_beurre.wsgi.application"
 DATABASES = {}
 
 if os.getenv("DATABASE_URL"):
+    DATABASE_URL = os.getenv("DATABASE_URL")
     DATABASES["default"] = dj_database_url.config(
         conn_max_age=600,
         ssl_require=True,
@@ -142,7 +145,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")  # deployment
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 STATIC_URL = "/static/"
 
@@ -157,4 +160,4 @@ LOGIN_URL = "login"
 AUTH_USER_MODEL = "users.User"
 
 # Activate Django-Heroku.
-django_heroku.settings(locals())
+# django_heroku.settings(locals())
