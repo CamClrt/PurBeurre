@@ -33,12 +33,16 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 DEBUG = True
 
 if ENV == "development":
+    DEBUG = True
+
     ALLOWED_HOSTS = [
         "localhost",
         "127.0.0.1",
         "testserver",
     ]
 else:
+    DEBUG = False
+
     ALLOWED_HOSTS = [
         "purbeurre-camclrt.herokuapp.com",
     ]
@@ -164,15 +168,15 @@ USE_TZ = True
 
 STATIC_URL = "/static/"
 
-STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+# STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
 
 if ENV == "production":
 
-    STATICFILES_STORAGE = (
+    """STATICFILES_STORAGE = (
         "whitenoise.storage.CompressedManifestStaticFilesStorage"
-    )
+    )"""
 
     # Activate Django-Heroku.
     django_heroku.settings(locals())
