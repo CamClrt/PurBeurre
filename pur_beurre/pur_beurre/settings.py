@@ -30,9 +30,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
 
 if ENV == "development":
+    DEBUG = True
 
     ALLOWED_HOSTS = [
         "localhost",
@@ -40,7 +41,7 @@ if ENV == "development":
         "testserver",
     ]
 else:
-
+    DEBUG = False
     ALLOWED_HOSTS = [
         "purbeurre-camclrt.herokuapp.com",
     ]
