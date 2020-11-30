@@ -10,7 +10,6 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
-from pathlib import Path
 import os
 import dj_database_url
 import django_heroku
@@ -21,7 +20,7 @@ ENV = os.environ.get("ENV")
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 # Quick-start development settings - unsuitable for production
@@ -32,9 +31,10 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = False if os.environ.get("ENV", "development") == "production" else True
-DEBUG = True
 
 if ENV == "development":
+    DEBUG = True
+
     ALLOWED_HOSTS = [
         "localhost",
         "127.0.0.1",
@@ -42,6 +42,8 @@ if ENV == "development":
         "purbeurre-camclrt.herokuapp.com",
     ]
 else:
+    DEBUG = False
+
     ALLOWED_HOSTS = [
         "purbeurre-camclrt.herokuapp.com",
     ]
@@ -165,17 +167,20 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-if ENV == "production":
-    STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+STATIC_URL = "/static/"
 
-    STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+
+STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
+
+if ENV == "production":
+
+    STATICFILES_STORAGE = (
+        "whitenoise.storage.CompressedManifestStaticFilesStorage"
+    )
 
     # Activate Django-Heroku.
     django_heroku.settings(locals())
-
-STATIC_URL = "/static/"
-
-STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 
 CRISPY_TEMPLATE_PACK = "bootstrap4"
 
