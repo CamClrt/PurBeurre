@@ -1,4 +1,5 @@
 from unittest.mock import patch
+
 from django.test import TestCase
 from food_choice.api import API
 
@@ -66,7 +67,7 @@ products_res = {
         {
             "product_name_fr": "Farine complète de Petit Épeautre",
             "nutrition_grades_tags": ["a"],
-            "url": "https://fr.openfoodfacts.org/produit/3273120020969/farine-complete-de-petit-epeautre-celnat",
+            "url": "https://fr.openfoodfacts.org/produit/3273120020969/farine-complete-de-petit-epeautre-celnat",  # noqa: E501
             "nutriments": {
                 "fat_100g": 3.7,
                 "carbohydrates_100g": 58.4,
@@ -77,7 +78,7 @@ products_res = {
                 "energy_100g": 1402,
                 "salt_100g": 0.01,
             },
-            "image_url": "https://static.openfoodfacts.org/images/products/327/312/002/0969/front_fr.51.400.jpg",
+            "image_url": "https://static.openfoodfacts.org/images/products/327/312/002/0969/front_fr.51.400.jpg",  # noqa: E501
             "code": "3273120020969",
         }
     ]

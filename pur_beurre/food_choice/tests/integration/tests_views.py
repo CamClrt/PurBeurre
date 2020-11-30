@@ -1,7 +1,8 @@
-from django.test import Client, TestCase
+from django.test import Client
+from django.test import TestCase
 from django.urls import reverse
-from users.models import User
 from food_choice.models import Product
+from users.models import User
 
 
 class TestFavoritesView(TestCase):

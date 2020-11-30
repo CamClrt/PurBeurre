@@ -1,9 +1,10 @@
-from django.test import Client, RequestFactory, TestCase
-from django.urls import reverse
 from django.contrib.auth.models import AnonymousUser
-
-from users.views import profile
+from django.test import Client
+from django.test import RequestFactory
+from django.test import TestCase
+from django.urls import reverse
 from users.models import User
+from users.views import profile
 
 
 class TestLoginView(TestCase):

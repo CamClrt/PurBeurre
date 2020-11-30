@@ -1,6 +1,7 @@
 """Centralize the application urls"""
 
 from django.urls import path
+
 from . import views
 
 

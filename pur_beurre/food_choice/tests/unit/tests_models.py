@@ -1,7 +1,9 @@
-from django.test import TestCase
-from food_choice.models import Product, Category, Favoris
-from users.models import User
 from django.db import IntegrityError
+from django.test import TestCase
+from food_choice.models import Category
+from food_choice.models import Favoris
+from food_choice.models import Product
+from users.models import User
 
 
 class TestModels(TestCase):
@@ -10,8 +12,8 @@ class TestModels(TestCase):
             name="Nutella",
             code="1234567890123",
             brand="Ferrero",
-            photo_url="https://fr.openfoodfacts.org/produit/26073651/nutella",
-            product_url="https://static.openfoodfacts.org/images/products/26073651/nutella_img.jpg",
+            photo_url="https://fr.openfoodfacts.org/produit/26073651/nutella",  # noqa: E501
+            product_url="https://static.openfoodfacts.org/images/products/26073651/nutella_img.jpg",  # noqa: E501
             nutrition_grade="e",
             energy_100g=1000,
             fat=500,
@@ -64,7 +66,7 @@ class TestModels(TestCase):
         favoris = Favoris(product=product, substitute=substitute, owner=user)
         self.assertEqual(
             str(favoris),
-            "inconnu@gmail.com: Pâte à tartiner allégée, 6789012345678, a substitute Nutella, 1234567890123, e",
+            "inconnu@gmail.com: Pâte à tartiner allégée, 6789012345678, a substitute Nutella, 1234567890123, e",  # noqa: E501
         )
 
     def test_favorite_unique_constraint(self):
@@ -88,7 +90,7 @@ class TestModels(TestCase):
 
         Favoris(product=product, substitute=substitute, owner=user)
 
-        message = 'duplicate key value violates unique constraint "food_choice_product_code_key"'
+        message = 'duplicate key value violates unique constraint "food_choice_product_code_key"'  # noqa: E501
         with self.assertRaisesMessage(IntegrityError, message):
             product = Product.objects.create(
                 name="Nutella",

@@ -1,13 +1,17 @@
 """Views used by the application."""
 
-from django.shortcuts import render, redirect
-from .forms import HomeResearchForm
-from .models import Product, Category, Favoris
-from users.models import User
-from django.db.models import Count
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
-from django.contrib import messages
+from django.db.models import Count
+from django.shortcuts import redirect
+from django.shortcuts import render
+from users.models import User
+
+from .forms import HomeResearchForm
+from .models import Category
+from .models import Favoris
+from .models import Product
 
 
 def home(request):

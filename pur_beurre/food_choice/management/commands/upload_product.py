@@ -1,10 +1,11 @@
 """Launche the filling of the database on the command line."""
 
 from django.core.management.base import BaseCommand
-from food_choice.models import Category, Product
-from food_choice.api import API
-from progress.bar import Bar
 from django.db import IntegrityError
+from food_choice.api import API
+from food_choice.models import Category
+from food_choice.models import Product
+from progress.bar import Bar
 
 
 class Command(BaseCommand):

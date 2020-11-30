@@ -1,4 +1,5 @@
-from django.test import TestCase, RequestFactory
+from django.test import RequestFactory
+from django.test import TestCase
 from users.models import User
 
 
