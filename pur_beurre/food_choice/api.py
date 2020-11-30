@@ -65,7 +65,7 @@ class API:
                     "tag_contains_0": "contains",
                     "tag_0": "category",
                     "sort_by": "last_modified_t",
-                    "page_size": "75",
+                    "page_size": "50",
                     "json": "true",
                 }
 

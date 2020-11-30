@@ -12,7 +12,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
         api = API()
-        imported_categories = api.get_categories(6)
+        imported_categories = api.get_categories(5)
         imported_products = api.get_products(imported_categories)
 
         if imported_products is not None:
