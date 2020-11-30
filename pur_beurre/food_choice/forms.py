@@ -31,7 +31,7 @@ class HomeResearchForm(forms.Form):
                 "name": "home_search",
                 "id": "home_search",
                 "class": "rounded",
-                "size": "50",
+                "size": "30",
                 "autofocus": "autofocus",
             }
         ),
