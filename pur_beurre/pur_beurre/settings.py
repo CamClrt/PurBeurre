@@ -13,7 +13,6 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 import sentry_sdk
 import os
 import dj_database_url
-import django_heroku
 
 
 # settings for "development" or "production"
@@ -179,14 +178,7 @@ LOGIN_URL = "login"
 
 AUTH_USER_MODEL = "users.User"
 
-if ENV == "production":
-
-    STATICFILES_STORAGE = (
-        "whitenoise.storage.CompressedManifestStaticFilesStorage"
-    )
-
-    # Activate Django-Heroku.
-    django_heroku.settings(locals())
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 sentry_sdk.init(
     "https://cab13138d79d45169402f73603268e76@o484599.ingest.sentry.io/5538027",
