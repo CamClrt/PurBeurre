@@ -22,9 +22,14 @@ class API:
     def get_categories(self, nb_cat_selected):
         """Import and return a selection of x categories"""
         date = datetime.now()
-        headers = {"date": date.__str__()[:19], "user-agent": "PurBeurre/0.0.1"}
+        headers = {
+            "date": date.__str__()[:19],
+            "user-agent": "PurBeurre/0.0.1",
+        }
 
-        response = requests.get(self.categories_url, headers=headers, timeout=10)
+        response = requests.get(
+            self.categories_url, headers=headers, timeout=10
+        )
 
         category_list = None
 
@@ -37,7 +42,8 @@ class API:
                 imported_category[self.categories_name_field]
                 for imported_category in imported_categories
                 if re.fullmatch(
-                    self.categories_regex, imported_category[self.categories_name_field]
+                    self.categories_regex,
+                    imported_category[self.categories_name_field],
                 )
                 is not None
             ]
@@ -65,17 +71,23 @@ class API:
                     "tag_contains_0": "contains",
                     "tag_0": "category",
                     "sort_by": "last_modified_t",
-                    "page_size": "50",
+                    "page_size": "100",
                     "json": "true",
                 }
 
                 payload["tag_0"] = f"'{str(category)}''"
 
                 date = datetime.now()
-                headers = {"date": date.__str__()[:19], "user-agent": "PurBeurre/0.0.1"}
+                headers = {
+                    "date": date.__str__()[:19],
+                    "user-agent": "PurBeurre/0.0.1",
+                }
 
                 response = requests.get(
-                    self.products_url, params=payload, headers=headers, timeout=10
+                    self.products_url,
+                    params=payload,
+                    headers=headers,
+                    timeout=10,
                 )
 
                 if response.status_code == 200:
