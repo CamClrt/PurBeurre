@@ -14,6 +14,10 @@ This project aims to help the Pur Beurre compagny's customer to eat healthier th
 * [OpenFoodfacts API](https://fr.openfoodfacts.org/)
 * Love 💙
 
+## Deployment
+
+* Heroku: [purbeurre-camclrt.herokuapp.com](http://purbeurre-camclrt.herokuapp.com/)
+
 ## Versions
 
 Created in:   November 2020  
