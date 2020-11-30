@@ -30,7 +30,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
 
 if ENV == "development":
     DEBUG = True
@@ -172,6 +172,14 @@ STATIC_URL = "/static/"
 
 STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
 
+CRISPY_TEMPLATE_PACK = "bootstrap4"
+
+LOGIN_REDIRECT_URL = "/"
+
+LOGIN_URL = "login"
+
+AUTH_USER_MODEL = "users.User"
+
 if ENV == "production":
 
     """STATICFILES_STORAGE = (
@@ -180,11 +188,3 @@ if ENV == "production":
 
     # Activate Django-Heroku.
     django_heroku.settings(locals())
-
-CRISPY_TEMPLATE_PACK = "bootstrap4"
-
-LOGIN_REDIRECT_URL = "/"
-
-LOGIN_URL = "login"
-
-AUTH_USER_MODEL = "users.User"
