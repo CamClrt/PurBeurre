@@ -39,7 +39,6 @@ if ENV == "development":
         "localhost",
         "127.0.0.1",
         "testserver",
-        "purbeurre-camclrt.herokuapp.com",
     ]
 else:
     DEBUG = False
@@ -82,7 +81,7 @@ else:
         "django.contrib.auth.middleware.AuthenticationMiddleware",
         "django.contrib.messages.middleware.MessageMiddleware",
         "django.middleware.clickjacking.XFrameOptionsMiddleware",
-        "whitenoise.middleware.WhiteNoiseMiddleware",
+        # "whitenoise.middleware.WhiteNoiseMiddleware",
     ]
 
 ROOT_URLCONF = "pur_beurre.urls"
@@ -175,9 +174,9 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
 
 if ENV == "production":
 
-    STATICFILES_STORAGE = (
+    """STATICFILES_STORAGE = (
         "whitenoise.storage.CompressedManifestStaticFilesStorage"
-    )
+    )"""
 
     # Activate Django-Heroku.
     django_heroku.settings(locals())
