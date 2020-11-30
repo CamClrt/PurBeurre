@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
+import sentry_sdk
 import os
 import dj_database_url
 import django_heroku
@@ -186,3 +187,8 @@ if ENV == "production":
 
     # Activate Django-Heroku.
     django_heroku.settings(locals())
+
+sentry_sdk.init(
+    "https://cab13138d79d45169402f73603268e76@o484599.ingest.sentry.io/5538027",
+    traces_sample_rate=1.0,
+)
