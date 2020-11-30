@@ -178,7 +178,7 @@ LOGIN_URL = "login"
 
 AUTH_USER_MODEL = "users.User"
 
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
 
 sentry_sdk.init(
     "https://cab13138d79d45169402f73603268e76@o484599.ingest.sentry.io/5538027",
